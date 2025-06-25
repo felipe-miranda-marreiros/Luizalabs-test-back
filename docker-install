@@ -1,0 +1,98 @@
+#!/bin/bash
+
+set -e
+
+echo "Starting Docker setup for the application..."
+
+# Check if Docker is installed
+if ! command -v docker &> /dev/null
+then
+    echo "Docker is not installed. Please install Docker before continuing."
+    exit 1
+fi
+
+# Check if Docker Compose is installed
+if ! command -v docker-compose &> /dev/null
+then
+    echo "Docker Compose is not installed. Please install Docker Compose before continuing."
+    exit 1
+fi
+
+# Remove existing .env.development file if it exists
+if [ -f .env.development ]; then
+  echo "Removing old .env.development..."
+  rm .env.development
+fi
+
+# Remove existing .env.test file if it exists
+if [ -f .env.test ]; then
+  echo "Removing old .env.test..."
+  rm .env.test
+fi
+
+# Create a new .env.development from .env.example
+if [ -f .env.example.dev ]; then
+  echo "Creating new .env.development from .env.example..."
+  cp .env.example.dev .env.development
+else
+  echo ".env.example.dev file not found. Aborting."
+  exit 1
+fi
+
+# Create a new .env.test from .env.example.test
+if [ -f .env.example.test ]; then
+  echo "Creating new .env.test from .env.example.test..."
+  cp .env.example.test .env.test
+else
+  echo ".env.example.test file not found. Aborting."
+  exit 1
+fi
+
+# Create a new .env.local from .env.example.local
+if [ -f .env.example.local ]; then
+  echo "Creating new .env.local from .env.example.local..."
+  cp .env.example.local .env.local
+else
+  echo ".env.example.local file not found. Aborting."
+  exit 1
+fi
+
+echo "Installing dependencies..."
+npm install
+
+echo "Generating docs..."
+npm run docs
+
+# Stop and remove existing containers (if any)
+echo "Stopping existing containers..."
+docker-compose --env-file .env.development down || true
+
+# Build the app image
+echo "Building app image..."
+docker build -t blog-api .
+
+# Start the services using Docker Compose
+echo "Starting services with Docker Compose..."
+docker compose --env-file .env.development up -d
+
+set -a
+source .env.development
+set +a
+
+echo "POSTGRES_CONTAINER_NAME = '${POSTGRES_CONTAINER_NAME}'"
+
+# Checking if PostgreSQL is up
+echo "Waiting for PostgreSQL..."
+until docker exec ${POSTGRES_CONTAINER_NAME} pg_isready -U "$POSTGRES_USER" > /dev/null 2>&1; do
+  echo "Waiting for database..."
+  sleep 2
+done
+
+# Database resets
+echo "Resetting database and running migrations"
+docker exec -e NODE_ENV=development ${APP_CONTAINER_NAME} npm run reset:db
+
+echo "Pushing migration files..."
+docker exec ${APP_CONTAINER_NAME} npx drizzle-kit push
+
+echo "Docker setup and services configured successfully"
