@@ -1,0 +1,21 @@
+{
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "compilerOptions": {
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "target": "ES2024",
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "noUnusedLocals": true,
+    "paths": {
+      "@/Application/*": ["Application/*"],
+      "@/Domain/*": ["Domain/*"],
+      "@/Main/*": ["Main/*"],
+      "@/Presentation/*": ["Presentation/*"],
+      "@/Shared/*": ["Shared/*"],
+      "@/Tests/*": ["Tests/*"],
+      "@/Infrastructure/*": ["Infrastructure/*"]
+    }
+  },
+  "include": ["src/**/*", "environment.d.ts"]
+}
