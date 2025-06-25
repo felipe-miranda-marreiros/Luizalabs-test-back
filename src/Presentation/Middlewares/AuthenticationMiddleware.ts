@@ -15,7 +15,7 @@ export class AuthenticationMiddleware implements Middleware {
     cookies: Cookies<AuthenticationParams>,
     headers: Headers
   ): Promise<HttpResponse<AuthenticationResponse>> {
-    if (!cookies.data.jwt) {
+    if (!cookies.data.token) {
       throw new ForbiddenError()
     }
     const { current_user } = await this.authentication.auth(cookies.data)

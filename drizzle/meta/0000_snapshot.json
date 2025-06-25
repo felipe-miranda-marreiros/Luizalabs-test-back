@@ -1,5 +1,5 @@
 {
-  "id": "01359e2c-4910-4abf-9003-88685ec79f06",
+  "id": "108d307d-b45d-4b57-b559-0eeffe5a03d1",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -62,64 +62,6 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
-    "public.usernames_table": {
-      "name": "usernames_table",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "integer",
-          "primaryKey": true,
-          "notNull": true,
-          "identity": {
-            "type": "always",
-            "name": "usernames_table_id_seq",
-            "schema": "public",
-            "increment": "1",
-            "startWith": "1",
-            "minValue": "1",
-            "maxValue": "2147483647",
-            "cache": "1",
-            "cycle": false
-          }
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
-        },
-        "username": {
-          "name": "username",
-          "type": "varchar(255)",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {
-        "usernames_table_username_unique": {
-          "name": "usernames_table_username_unique",
-          "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
-        }
-      },
-      "policies": {},
-      "checkConstraints": {},
-      "isRLSEnabled": false
-    },
     "public.users_table": {
       "name": "users_table",
       "schema": "",
@@ -157,12 +99,6 @@
         },
         "email_id": {
           "name": "email_id",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "username_id": {
-          "name": "username_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": true

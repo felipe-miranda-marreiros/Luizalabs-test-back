@@ -19,8 +19,7 @@ const createUserSchema = z.object({
   email: z.string().email().nonempty(),
   first_name: z.string().nonempty(),
   last_name: z.string().nonempty(),
-  password: z.string().nonempty(),
-  username: z.string().nonempty()
+  password: z.string().nonempty()
 }) satisfies z.Schema<SignUpParams>
 
 const createUserValidation = new ZodAdapter(createUserSchema)

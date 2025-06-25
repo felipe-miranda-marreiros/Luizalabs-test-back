@@ -8,8 +8,7 @@ describe('SignIn Routes', () => {
       email: 'any_emaildds@gmail.com',
       first_name: 'any_first_name',
       last_name: 'any_last_name',
-      password: 'any_password',
-      username: 'any_usernamesds'
+      password: 'any_password'
     }
     await request(app)
       .post('/api/auth/sign-up')
@@ -24,6 +23,7 @@ describe('SignIn Routes', () => {
       })
       .set('Accept', 'application/json')
       .expect(200)
+    console.log(response.body)
     const cookies = response.headers['set-cookie'] as unknown as string[]
     const cookie = cookies.find((cookie) => cookie.startsWith('jwt'))
     const accessToken = cookie?.split(';')[0].split('=')[1]

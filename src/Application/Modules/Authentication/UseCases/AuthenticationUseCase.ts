@@ -10,7 +10,9 @@ export class AuthenticationUseCase implements Authentication {
   constructor(private readonly decrypter: Decrypter) {}
 
   async auth(params: AuthenticationParams): Promise<AuthenticationResponse> {
-    const current_user = await this.decrypter.decrypt<LoggedInUser>(params.jwt)
+    const current_user = await this.decrypter.decrypt<LoggedInUser>(
+      params.token
+    )
     return {
       current_user
     }

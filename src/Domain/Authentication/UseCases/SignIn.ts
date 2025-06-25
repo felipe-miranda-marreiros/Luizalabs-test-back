@@ -1,5 +1,5 @@
 export interface SignInResponse {
-  jwt: string
+  token: string
 }
 
 export interface SignInParams {

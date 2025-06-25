@@ -1,7 +1,7 @@
 import { LoggedInUser } from '@/Domain/Users/Models/User'
 
 export interface AuthenticationParams {
-  jwt: string
+  token: string
 }
 
 export type AuthenticationResponse = {

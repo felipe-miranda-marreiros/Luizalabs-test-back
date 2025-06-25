@@ -8,8 +8,7 @@ export async function getCookies(): Promise<string[]> {
     email: faker.internet.email(),
     password: faker.internet.password(),
     first_name: faker.person.firstName(),
-    last_name: faker.person.lastName(),
-    username: faker.internet.username()
+    last_name: faker.person.lastName()
   }
   const authResponse = await agent(app)
     .post(`/api/auth/sign-up`)

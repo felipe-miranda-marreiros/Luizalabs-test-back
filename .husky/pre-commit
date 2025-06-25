@@ -1,0 +1,20 @@
+set -e
+npx tsc --noEmit
+echo "Getting staged files"
+STAGED_FILES=$(git diff --cached --name-only)
+
+echo "Staged files"
+echo "$STAGED_FILES"
+
+HAS_UNIT_TESTS=$(echo "$STAGED_FILES" | grep -E '\.spec\.ts$' || true)
+HAS_INTEGRATION_TESTS=$(echo "$STAGED_FILES" | grep -E '\.test\.ts$' || true)
+
+if [ -n "$HAS_UNIT_TESTS" ]; then
+  echo "Running unit tests"
+  npm run test:unit
+fi
+
+if [ -n "$HAS_INTEGRATION_TESTS" ]; then
+  echo "Running integration tests"
+  npm run test:integration
+fi

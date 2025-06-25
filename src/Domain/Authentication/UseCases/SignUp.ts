@@ -1,13 +1,12 @@
 export type SignUpParams = {
-  username: string
-  password: string
   first_name: string
   last_name: string
+  password: string
   email: string
 }
 
 export type SignUpResponse = {
-  access_token: string
+  token: string
 }
 
 export interface SignUp {

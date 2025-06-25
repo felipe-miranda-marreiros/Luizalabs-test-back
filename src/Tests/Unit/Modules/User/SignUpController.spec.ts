@@ -49,7 +49,7 @@ describe('CreateUser Controller', () => {
   it('Should return 200 if User is created successfully', async () => {
     const { sut } = createSut()
     const response = await sut.handle({ body: signUpParamsMock })
-    expect(response.body?.access_token).toEqual(signUpResponseMock.access_token)
+    expect(response.body?.token).toEqual(signUpResponseMock.token)
     expect(response.status_code).toBe(200)
   })
 })

@@ -40,14 +40,6 @@ describe('SignUp UseCase', () => {
     const promise = sut.signUp(signUpParamsMock)
     await expect(promise).rejects.toThrow(ConflictError)
   })
-  it('Should not create an User if username already in use', async () => {
-    const { sut, userRepositoryStub } = createSut()
-    jest
-      .spyOn(userRepositoryStub, 'isUsernameInUse')
-      .mockResolvedValueOnce(true)
-    const promise = sut.signUp(signUpParamsMock)
-    await expect(promise).rejects.toThrow(ConflictError)
-  })
   it('Should create an User if params are valid', async () => {
     const { sut } = createSut()
     const response = await sut.signUp(signUpParamsMock)

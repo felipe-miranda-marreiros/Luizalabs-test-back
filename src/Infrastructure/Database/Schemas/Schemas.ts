@@ -12,15 +12,9 @@ const baseSchema = {
 export const users_table = pgTable('users_table', {
   ...baseSchema,
   email_id: integer().notNull(),
-  username_id: integer().notNull(),
   password: varchar({ length: 255 }).notNull(),
   first_name: varchar({ length: 255 }).notNull(),
   last_name: varchar({ length: 255 }).notNull()
-})
-
-export const usernames_table = pgTable('usernames_table', {
-  ...baseSchema,
-  username: varchar({ length: 255 }).notNull().unique()
 })
 
 export const emails_table = pgTable('emails_table', {

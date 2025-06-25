@@ -44,10 +44,10 @@ export class SignInUseCase implements SignIn {
     }
 
     logger.warn(`JWT process started`)
-    const jwt = await this.encryper.encrypt<LoggedInUser>(rest)
+    const token = await this.encryper.encrypt<LoggedInUser>(rest)
     logger.warn(`JWT process finished`)
     return {
-      jwt
+      token
     }
   }
 }

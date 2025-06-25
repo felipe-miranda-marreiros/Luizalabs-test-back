@@ -1,10 +1,7 @@
 import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
 import { db } from '@/Infrastructure/Database/Drizzle/DrizzleClient'
 import { UserSQLRepository } from '@/Infrastructure/Database/Repositories/UserSQLRepository'
-import {
-  emails_table,
-  usernames_table
-} from '@/Infrastructure/Database/Schemas/Schemas'
+import { emails_table } from '@/Infrastructure/Database/Schemas/Schemas'
 
 describe('User Repository', () => {
   let userSQLRepository = null as unknown as UserSQLRepository
@@ -18,8 +15,7 @@ describe('User Repository', () => {
       email: 'any_email@gmail.com',
       first_name: 'any_first_name',
       last_name: 'any_last_name',
-      password: 'any_password',
-      username: 'any_username'
+      password: 'any_password'
     }
     const user = await userSQLRepository.createUser(createUserMock)
     expect(user.first_name).toEqual(createUserMock.first_name)
@@ -42,28 +38,12 @@ describe('User Repository', () => {
     )
     expect(isEmailInUse).toEqual(true)
   })
-  it('Should return false if isUsernameInUse does not find an username equals to params', async () => {
-    const isUsernameInUse =
-      await userSQLRepository.isUsernameInUse('avaiable_username')
-    expect(isUsernameInUse).toEqual(false)
-  })
-  it('Should return true if isUsernameInUse does find an username equals to params', async () => {
-    const usedUsername = await db
-      .insert(usernames_table)
-      .values({ username: 'used_username' })
-      .returning({ usedUsername: usernames_table.username })
-    const isUsernameInUse = await userSQLRepository.isUsernameInUse(
-      usedUsername[0].usedUsername
-    )
-    expect(isUsernameInUse).toEqual(true)
-  })
   it('Should return an User if getUserByEmail does find based on email', async () => {
     const createUserMock: SignUpParams = {
       email: 'test1@gmail.com',
       first_name: 'any_first_name',
       last_name: 'any_last_name',
-      password: 'any_password',
-      username: 'test1_username'
+      password: 'any_password'
     }
     await userSQLRepository.createUser(createUserMock)
     const user = await userSQLRepository.getUserByEmail(createUserMock.email)
