@@ -1,5 +1,9 @@
-import { Router, static as static_ } from 'express'
+import { fileURLToPath } from 'url'
 import path from 'path'
+import { Router, static as static_ } from 'express'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 export const swaggerRouter = Router()
 
