@@ -2,6 +2,7 @@ import { expressControllerAdapter } from '@/Main/Libs/Express/ExpressControllerA
 import { addOrRemoveWishController } from './Routes/AddOrRemoveWishRoute'
 import { removeWishListController } from './Routes/RemoveWishListRoute'
 import { wishListController } from './Routes/WishListControllerRoute'
+import { currentWishesRoute } from './Routes/CurrentWishesRoute'
 import { Router } from 'express'
 
 export const wishRouter = Router()
@@ -17,3 +18,5 @@ wishRouter.delete(
 )
 
 wishRouter.get('/api/wish', expressControllerAdapter(wishListController))
+
+wishRouter.get('/api/wish/list', expressControllerAdapter(currentWishesRoute))
