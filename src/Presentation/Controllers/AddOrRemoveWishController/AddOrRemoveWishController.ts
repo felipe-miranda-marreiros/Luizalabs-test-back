@@ -1,8 +1,6 @@
 import { BadRequestError } from '@/Application/Contracts/Errors/BadRequestError'
-import {
-  AddOrRemoveWish,
-  WishList
-} from '@/Domain/Wish/UseCases/AddOrRemoveWish'
+import { Wishes } from '@/Domain/Wish/Models/Wishes'
+import { AddOrRemoveWish } from '@/Domain/Wish/UseCases/AddOrRemoveWish'
 import { Controller } from '@/Presentation/Contracts/Controller'
 import {
   Cookies,
@@ -20,7 +18,7 @@ export class AddOrRemoveWishController implements Controller {
     cookies: Cookies,
     headers: Headers,
     params: Params<{ product_id: string }>
-  ): Promise<HttpResponse<WishList>> {
+  ): Promise<HttpResponse<Wishes>> {
     if (!params.data.product_id) {
       throw new BadRequestError('Product id is required to complete operation')
     }

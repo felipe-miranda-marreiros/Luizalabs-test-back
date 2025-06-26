@@ -2,12 +2,12 @@ import { UserContext } from '@/Application/Contracts/Context/UserContext'
 import { WishRepository } from '@/Application/Contracts/Repositories/WishRepository'
 import {
   AddOrRemoveWish,
-  AddOrRemoveWishParams,
-  WishList
+  AddOrRemoveWishParams
 } from '@/Domain/Wish/UseCases/AddOrRemoveWish'
 import { wishListService } from '../Services/WishListLimitService'
 import { productService } from '../../Products/Services/ProductService'
 import { NotFoundError } from '@/Application/Contracts/Errors/NotFoundError'
+import { Wishes } from '@/Domain/Wish/Models/Wishes'
 
 export class AddOrRemoveWishUseCase implements AddOrRemoveWish {
   constructor(
@@ -15,7 +15,7 @@ export class AddOrRemoveWishUseCase implements AddOrRemoveWish {
     private readonly wishRepository: WishRepository
   ) {}
 
-  async addOrRemove(params: AddOrRemoveWishParams): Promise<WishList> {
+  async addOrRemove(params: AddOrRemoveWishParams): Promise<Wishes> {
     const user = this.userContext.getLoggedInUser()
     const wishList = await this.wishRepository.getByUserId(user.id)
     if (wishList) {
@@ -36,7 +36,7 @@ export class AddOrRemoveWishUseCase implements AddOrRemoveWish {
     wishList: { product_ids: number[] },
     userId: number,
     productId: number
-  ): Promise<WishList> {
+  ): Promise<Wishes> {
     const isInWishList = wishList.product_ids.includes(productId)
 
     let updatedProductIds: number[]
@@ -57,7 +57,7 @@ export class AddOrRemoveWishUseCase implements AddOrRemoveWish {
     return this.buildWishList(updatedProductIds)
   }
 
-  private buildWishList(productIds: number[]): WishList {
+  private buildWishList(productIds: number[]): Wishes {
     return {
       items: productIds,
       count: productIds.length
@@ -67,7 +67,7 @@ export class AddOrRemoveWishUseCase implements AddOrRemoveWish {
   private async createWishList(
     userId: number,
     productId: number
-  ): Promise<WishList> {
+  ): Promise<Wishes> {
     await this.wishRepository.save({
       user_id: userId,
       product_ids: [productId]
