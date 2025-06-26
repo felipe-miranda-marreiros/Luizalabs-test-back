@@ -8,6 +8,7 @@ import { expressAuthenticationMiddleware } from './AuthMiddleware'
 import { authenticationRouter } from '@/Main/Routes/Authentication'
 import { userRouter } from '@/Main/Routes/Users'
 import { swaggerRouter } from '@/Main/Routes/Swagger/SwggerRouter'
+import { wishRouter } from '@/Main/Routes/Wish'
 
 export const app = express()
 
@@ -23,6 +24,7 @@ app.use(authenticationRouter)
 app.use(expressMiddlewareAdapter(authenticationMiddleware))
 app.use(expressAuthenticationMiddleware)
 app.use(userRouter)
+app.use(wishRouter)
 
 // Global Error Handler
 app.use(errorHandlerMiddleware)
