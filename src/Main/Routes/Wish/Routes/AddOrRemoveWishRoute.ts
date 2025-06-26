@@ -3,7 +3,7 @@ import { nodeUserContextAdapter } from '@/Infrastructure/Context/NodeUserContext
 import { WishSQLRepository } from '@/Infrastructure/Database/Repositories/WishSQLRepository'
 import { AddOrRemoveWishController } from '@/Presentation/Controllers/AddOrRemoveWishController/AddOrRemoveWishController'
 
-const wishSQLRepository = new WishSQLRepository()
+export const wishSQLRepository = new WishSQLRepository()
 
 const addOrRemoveUseCase = new AddOrRemoveWishUseCase(
   nodeUserContextAdapter,
