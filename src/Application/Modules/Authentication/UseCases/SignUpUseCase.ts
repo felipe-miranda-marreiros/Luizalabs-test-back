@@ -24,7 +24,7 @@ export class SignUpUseCase implements SignUp {
 
     if (isEmailInUse) {
       logger.warn(`Email: ${params.email} is already in use`)
-      throw new ConflictError(`An email already exits with ${params.email}`)
+      throw new ConflictError(`Este email já está em uso: ${params.email}`)
     }
 
     logger.info(`Hashing password process started`)

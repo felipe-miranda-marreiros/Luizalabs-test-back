@@ -26,7 +26,9 @@ export class SignInUseCase implements SignIn {
 
     if (!user) {
       logger.warn(`User was not found with ${params.email}`)
-      throw new NotFoundError('User not found')
+      throw new NotFoundError(
+        `Usuário não foi encontrado com este email: ${params.email}`
+      )
     }
 
     logger.info(`Comparing passwords process started`)
@@ -40,7 +42,7 @@ export class SignInUseCase implements SignIn {
 
     if (!isPasswordEqual) {
       logger.warn(`Password is wrong, sign in process finished`)
-      throw new UnauthorizedError('Email or password invalid')
+      throw new UnauthorizedError('Email ou senha incorretos')
     }
 
     logger.warn(`JWT process started`)
