@@ -1,0 +1,19 @@
+{
+  "specPathGlobs": ["src/Main/Docs/**/*.ts"],
+  "tsconfigPath": "./tsconfig.json",
+  "outputPath": "./docs/openapi.json",
+  "specVersion": 3,
+  "openapi": {
+    "title": "Luizalabs API",
+    "version": "0.0.1",
+    "securityDefinitions": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "jwt"
+      }
+    }
+  },
+  "debug": false,
+  "ignoreErrors": true
+}
