@@ -88,6 +88,9 @@ until docker exec ${POSTGRES_CONTAINER_NAME} pg_isready -U "$POSTGRES_USER" > /d
   sleep 2
 done
 
+echo "npm install"
+docker exec ${APP_CONTAINER_NAME} npm install
+
 # Database resets
 echo "Resetting database and running migrations"
 docker exec -e NODE_ENV=development ${APP_CONTAINER_NAME} npm run reset:db
