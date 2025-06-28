@@ -14,6 +14,9 @@ const transporter = nodemailer.createTransport({
 
 export const nodeMailerAdapter: SMTP = {
   async deliver(options: SMTPOptions): Promise<void> {
+    if (process.env.APP_ENV === 'test') {
+      return Promise.resolve()
+    }
     transporter.sendMail(options, function (error, info) {
       if (error) {
         logger.error('Error delivering e-mail', error)
