@@ -73,7 +73,7 @@ describe('SignIn Controller', () => {
     await sut.signIn(signInParamsMock)
     expect(encryptSpy).toHaveBeenCalledWith({
       created_at: 'any_date',
-      email_id: 1,
+      email: 'any_mail@mail.com',
       first_name: 'any_first_name',
       id: 1,
       last_name: 'any_last_name',

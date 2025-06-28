@@ -1,7 +1,7 @@
-import { LoggedInUser } from '../Models/User'
+import { PartialUser } from '../Models/User'
 
-export type CurrentUserReponse = LoggedInUser
+export type CurrentUserReponse = PartialUser
 
 export interface CurrentUser {
-  getUser(): Promise<LoggedInUser>
+  getUser(): Promise<PartialUser>
 }

@@ -8,11 +8,17 @@ export class WishRepositoryStub implements WishRepository {
   }): Promise<void> {
     Promise.resolve()
   }
-  async update(params: {
-    user_id: number
-    product_ids: number[]
-  }): Promise<void> {
+  async update(
+    params: {
+      user_id: number
+      product_ids: number[]
+    },
+    callback?: Promise<void>
+  ): Promise<void> {
     Promise.resolve()
+    if (callback) {
+      Promise.resolve()
+    }
   }
   async getByUserId(userId: number): Promise<Wish | null> {
     return {

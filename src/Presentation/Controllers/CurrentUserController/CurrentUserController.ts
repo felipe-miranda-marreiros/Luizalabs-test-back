@@ -1,4 +1,4 @@
-import { LoggedInUser } from '@/Domain/Users/Models/User'
+import { PartialUser } from '@/Domain/Users/Models/User'
 import { CurrentUser } from '@/Domain/Users/UseCases/CurrentUser'
 import { Controller } from '@/Presentation/Contracts/Controller'
 import {
@@ -15,7 +15,7 @@ export class CurrentUserController implements Controller {
     request: HttpRequest,
     cookies: Cookies,
     headers: Headers
-  ): Promise<HttpResponse<LoggedInUser>> {
+  ): Promise<HttpResponse<PartialUser>> {
     const loggedInUser = await this.currentUserUseCase.getUser()
     return {
       status_code: 200,

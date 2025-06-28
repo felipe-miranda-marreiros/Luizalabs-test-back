@@ -2,7 +2,7 @@ import {
   SignUpParams,
   SignUpResponse
 } from '@/Domain/Authentication/UseCases/SignUp'
-import { LoggedInUser } from '@/Domain/Users/Models/User'
+import { PartialUser } from '@/Domain/Users/Models/User'
 
 export const signUpParamsMock: SignUpParams = {
   email: 'any_email',
@@ -15,9 +15,9 @@ export const signUpResponseMock: SignUpResponse = {
   token: 'encrypted_value'
 }
 
-export const createUserRepositoryMock: LoggedInUser = {
+export const createUserRepositoryMock: PartialUser = {
   created_at: 'any_date',
-  email_id: 1,
+  email: 'any_email@mail.com',
   first_name: 'any_name',
   id: 1,
   last_name: 'any_name',

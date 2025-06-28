@@ -8,11 +8,13 @@ import { wishListService } from '../Services/WishListLimitService'
 import { productService } from '../../Products/Services/ProductService'
 import { NotFoundError } from '@/Application/Contracts/Errors/NotFoundError'
 import { Wishes } from '@/Domain/Wish/Models/Wishes'
+import { SMTP } from '@/Application/Contracts/SMTP/SMTP'
 
 export class AddOrRemoveWishUseCase implements AddOrRemoveWish {
   constructor(
     private readonly userContext: UserContext,
-    private readonly wishRepository: WishRepository
+    private readonly wishRepository: WishRepository,
+    private readonly smtpService: SMTP
   ) {}
 
   async addOrRemove(params: AddOrRemoveWishParams): Promise<Wishes> {
@@ -49,10 +51,13 @@ export class AddOrRemoveWishUseCase implements AddOrRemoveWish {
       updatedProductIds = wishListService.checkForListLimit(updatedProductIds)
     }
 
-    await this.wishRepository.update({
-      user_id: userId,
-      product_ids: updatedProductIds
-    })
+    await this.wishRepository.update(
+      {
+        user_id: userId,
+        product_ids: updatedProductIds
+      },
+      !isInWishList ? this.deliverWishProductEmail(productId) : undefined
+    )
 
     return this.buildWishList(updatedProductIds)
   }
@@ -64,6 +69,18 @@ export class AddOrRemoveWishUseCase implements AddOrRemoveWish {
     }
   }
 
+  private async deliverWishProductEmail(productId: number) {
+    const user = this.userContext.getLoggedInUser()
+    const product = await productService.getById(productId)
+
+    await this.smtpService.deliver({
+      from: 'luizalabs-test@mail.com',
+      subject: `Produto adicionado aos favoritos`,
+      text: `Você adicionou o produto ${product?.title}`,
+      to: user.email
+    })
+  }
+
   private async createWishList(
     userId: number,
     productId: number
@@ -72,6 +89,8 @@ export class AddOrRemoveWishUseCase implements AddOrRemoveWish {
       user_id: userId,
       product_ids: [productId]
     })
+
+    await this.deliverWishProductEmail(productId)
 
     return this.buildWishList([productId])
   }

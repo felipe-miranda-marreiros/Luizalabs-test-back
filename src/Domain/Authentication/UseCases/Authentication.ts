@@ -1,11 +1,11 @@
-import { LoggedInUser } from '@/Domain/Users/Models/User'
+import { PartialUser } from '@/Domain/Users/Models/User'
 
 export interface AuthenticationParams {
   token: string
 }
 
 export type AuthenticationResponse = {
-  current_user: LoggedInUser
+  current_user: PartialUser
 }
 
 export interface Authentication {

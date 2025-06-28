@@ -8,7 +8,7 @@ import {
   SignInParams,
   SignInResponse
 } from '@/Domain/Authentication/UseCases/SignIn'
-import { LoggedInUser } from '@/Domain/Users/Models/User'
+import { PartialUser } from '@/Domain/Users/Models/User'
 import { logger } from '@/Infrastructure/Logger/PinoLoggerAdapter'
 
 export class SignInUseCase implements SignIn {
@@ -46,7 +46,7 @@ export class SignInUseCase implements SignIn {
     }
 
     logger.warn(`JWT process started`)
-    const token = await this.encryper.encrypt<LoggedInUser>(rest)
+    const token = await this.encryper.encrypt<PartialUser>(rest)
     logger.warn(`JWT process finished`)
     return {
       token

@@ -10,17 +10,27 @@ export class WishSQLRepository implements WishRepository {
     return `wish:user:${userId}`
   }
 
-  async update(params: {
-    user_id: number
-    product_ids: number[]
-  }): Promise<void> {
-    await db
-      .update(wishes_table)
-      .set({
-        product_ids: params.product_ids,
-        user_id: params.user_id
-      })
-      .where(eq(wishes_table.user_id, params.user_id))
+  async update(
+    params: {
+      user_id: number
+      product_ids: number[]
+    },
+    callback?: Promise<void>
+  ): Promise<void> {
+    await db.transaction(async (tx) => {
+      await tx
+        .update(wishes_table)
+        .set({
+          product_ids: params.product_ids,
+          user_id: params.user_id
+        })
+        .where(eq(wishes_table.user_id, params.user_id))
+
+      if (callback) {
+        await callback
+      }
+    })
+
     await redisAdapter.invalidate(this.getCacheKey(params.user_id))
   }
 

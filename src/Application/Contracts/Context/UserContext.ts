@@ -1,6 +1,6 @@
-import { LoggedInUser } from '@/Domain/Users/Models/User'
+import { PartialUser } from '@/Domain/Users/Models/User'
 
 export interface UserContext {
-  getLoggedInUser(): LoggedInUser
-  setLoggedInUser(user: LoggedInUser, callback: () => void): void
+  getLoggedInUser(): PartialUser
+  setLoggedInUser(user: PartialUser, callback: () => void): void
 }

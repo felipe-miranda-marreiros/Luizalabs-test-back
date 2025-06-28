@@ -1,15 +1,15 @@
 import { UserRepository } from '@/Application/Contracts/Repositories/UserRepository'
 import { SignUpParams } from '@/Domain/Authentication/UseCases/SignUp'
-import { LoggedInUser, User } from '@/Domain/Users/Models/User'
+import { PartialUser, User } from '@/Domain/Users/Models/User'
 
 export function createUserRepositoryStub(
-  response: LoggedInUser
+  response: PartialUser
 ): UserRepository {
   class UserRepositoryStub implements UserRepository {
     getUserByEmail(email: string): Promise<User | undefined> {
       return Promise.resolve({
         created_at: 'any_date',
-        email_id: 1,
+        email: 'any_mail@mail.com',
         first_name: 'any_first_name',
         id: 1,
         last_name: 'any_last_name',
@@ -24,7 +24,7 @@ export function createUserRepositoryStub(
     isUsernameInUse(username: string): Promise<boolean> {
       return Promise.resolve(false)
     }
-    createUser(params: SignUpParams): Promise<LoggedInUser> {
+    createUser(params: SignUpParams): Promise<PartialUser> {
       return Promise.resolve(response)
     }
   }

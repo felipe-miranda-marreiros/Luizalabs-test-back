@@ -4,6 +4,12 @@ import { createUserRepositoryMock } from '@/Tests/Mocks/Domain/User/UseCases'
 import { WishListUseCase } from '@/Application/Modules/Wish/UseCases/WishList'
 import { productService } from '@/Application/Modules/Products/Services/ProductService'
 
+jest.mock('@/Application/Modules/Products/Services/ProductService', () => ({
+  productService: {
+    getById: jest.fn()
+  }
+}))
+
 const userContextStub: UserContext = {
   getLoggedInUser: () => createUserRepositoryMock,
   setLoggedInUser: () => {}

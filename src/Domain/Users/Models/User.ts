@@ -1,6 +1,6 @@
 export interface User {
   id: number
-  email_id: number
+  email: string
   password: string
   first_name: string
   last_name: string
@@ -8,4 +8,4 @@ export interface User {
   updated_at: string
 }
 
-export type LoggedInUser = Omit<User, 'password'>
+export type PartialUser = Omit<User, 'password'>
