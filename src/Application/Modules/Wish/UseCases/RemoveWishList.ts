@@ -1,4 +1,5 @@
 import { UserContext } from '@/Application/Contracts/Context/UserContext'
+import { NotFoundError } from '@/Application/Contracts/Errors/NotFoundError'
 import { WishRepository } from '@/Application/Contracts/Repositories/WishRepository'
 import { RemoveWishList } from '@/Domain/Wish/UseCases/RemoveWishList'
 
@@ -12,7 +13,7 @@ export class RemoveWishListUseCase implements RemoveWishList {
     const user = this.userContext.getLoggedInUser()
     const wishList = await this.wishRepository.getByUserId(user.id)
     if (!wishList) {
-      return
+      throw new NotFoundError('Nenhum lista de favoritos encontrada')
     }
     await this.wishRepository.delete(user.id)
   }
