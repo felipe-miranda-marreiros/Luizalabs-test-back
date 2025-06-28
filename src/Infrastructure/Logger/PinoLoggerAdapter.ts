@@ -1,20 +1,26 @@
 import { Logger } from '@/Application/Contracts/Logger/Logger'
 import pino, { Logger as PinoLogger } from 'pino'
 
-export const baseLogger = pino({
-  level: 'info',
-  timestamp: () => `,"timestamp":"${new Date(Date.now()).toISOString()}"`,
-  transport: {
-    target: 'pino-pretty',
-    options: {
-      colorize: true
-    }
-  },
-  redact: {
-    paths: ['[0].password', 'password'],
-    censor: '[REDACTED]'
-  }
-})
+const isTestEnv = process.env.NODE_ENV === 'test'
+
+export const baseLogger = pino(
+  isTestEnv
+    ? { level: 'silent' }
+    : {
+        level: 'info',
+        timestamp: () => `,"timestamp":"${new Date(Date.now()).toISOString()}"`,
+        transport: {
+          target: 'pino-pretty',
+          options: {
+            colorize: true
+          }
+        },
+        redact: {
+          paths: ['[0].password', 'password'],
+          censor: '[REDACTED]'
+        }
+      }
+)
 
 export const logger: Logger<PinoLogger> = {
   logger: null as unknown as PinoLogger,
