@@ -40,6 +40,24 @@ services:
       PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     volumes:
       - pgadmin_data:/var/lib/pgadmin
+  redis:
+    image: redis:7-alpine
+    container_name: luizalabs-redis
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: luizalabs-redisinsight
+    ports:
+      - '5540:5540'
+    depends_on:
+      - redis
+    restart: unless-stopped
+
 volumes:
   pg_data:
   pgadmin_data:
+  redis_data:

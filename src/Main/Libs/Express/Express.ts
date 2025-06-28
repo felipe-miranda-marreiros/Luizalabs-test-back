@@ -11,6 +11,7 @@ import { swaggerRouter } from '@/Main/Routes/Swagger/SwggerRouter'
 import { wishRouter } from '@/Main/Routes/Wish'
 import axios from 'axios'
 import cors from 'cors'
+import { redisAdapter } from '@/Infrastructure/Cache/RedisAdapter'
 
 export const app = express()
 
@@ -28,7 +29,11 @@ app.use(express.json())
 app.use(swaggerRouter)
 app.use(authenticationRouter)
 app.get('/api/products', async (req, res) => {
+  const productKey = 'product_key'
+  const data = await redisAdapter.get(productKey)
+  if (data) return data
   const response = await axios.get('https://fakestoreapi.com/products')
+  await redisAdapter.set(productKey, response.data)
   res.status(200).json(response.data)
 })
 

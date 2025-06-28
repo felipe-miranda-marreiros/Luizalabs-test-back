@@ -23,7 +23,10 @@ const envSchema = z.object({
   PGADMIN_CONTAINER_NAME: z.string().nonempty(),
   PGADMIN_DEFAULT_EMAIL: z.string().email().nonempty(),
   PGADMIN_DEFAULT_PASSWORD: z.string().nonempty(),
-  PGADMIN_PORT: z.coerce.number().int().min(1).max(65535)
+  PGADMIN_PORT: z.coerce.number().int().min(1).max(65535),
+
+  // REDIS
+  REDIS_URL: z.string().nonempty()
 })
 
 export const ENV = envSchema.parse(process.env)

@@ -10,11 +10,13 @@ export function errorHandlerMiddleware(
 ) {
   if (err instanceof CustomError) {
     logger.warn('An custom error occurred', err)
+
     res.status(err.statusCode).json({
       errors: err.serializeErrors()
     })
     return
   }
+  console.log('err', err)
   logger.error('An error occurred', err)
   res.status(500).json(err)
   next()

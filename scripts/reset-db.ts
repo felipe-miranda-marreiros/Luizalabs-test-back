@@ -12,7 +12,7 @@ async function resetDatabase() {
 
   console.log('>> Dropping tables...')
   await db.execute(`
-  DROP TABLE IF EXISTS usernames_table, emails_table, users_table CASCADE;
+  DROP TABLE IF EXISTS usernames_table, emails_table, users_table, wishes_table CASCADE;
 `)
 
   await client.end()
