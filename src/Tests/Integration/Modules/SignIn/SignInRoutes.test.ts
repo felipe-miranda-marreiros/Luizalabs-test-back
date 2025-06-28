@@ -23,9 +23,8 @@ describe('SignIn Routes', () => {
       })
       .set('Accept', 'application/json')
       .expect(200)
-    console.log(response.body)
     const cookies = response.headers['set-cookie'] as unknown as string[]
-    const cookie = cookies.find((cookie) => cookie.startsWith('jwt'))
+    const cookie = cookies.find((cookie) => cookie.startsWith('token'))
     const accessToken = cookie?.split(';')[0].split('=')[1]
     expect(accessToken).toBeDefined()
   })
