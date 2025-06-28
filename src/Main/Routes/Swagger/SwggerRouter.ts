@@ -1,13 +1,14 @@
-import { fileURLToPath } from 'url'
-import path from 'path'
 import { Router, static as static_ } from 'express'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+import path from 'path'
 
 export const swaggerRouter = Router()
 
-swaggerRouter.use('/docs', static_(path.join(__dirname)))
+swaggerRouter.use(
+  '/docs',
+  static_(path.join(path.resolve(), 'src/Main/Routes/Swagger'))
+)
 swaggerRouter.get('/docs', (req, res) => {
-  res.sendFile(path.join(__dirname, 'SwaggerTemplate.html'))
+  res.sendFile(
+    path.join(path.resolve(), 'src/Main/Routes/Swagger', 'SwaggerTemplate.html')
+  )
 })
