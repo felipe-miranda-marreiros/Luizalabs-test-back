@@ -7,8 +7,7 @@ services:
     ports:
       - '${APP_PORT:-3000}:3000'
     volumes:
-      - .:/app
-    command: sh -c "npm run start:dev"
+      - /app/node_modules
     depends_on:
       - db
     env_file:

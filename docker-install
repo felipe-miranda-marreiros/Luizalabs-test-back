@@ -57,19 +57,13 @@ else
   exit 1
 fi
 
-echo "Installing dependencies..."
-npm install
-
-echo "Generating docs..."
-npm run docs
-
 # Stop and remove existing containers (if any)
 echo "Stopping existing containers..."
 docker-compose --env-file .env.development down || true
 
 # Build the app image
 echo "Building app image..."
-docker build -t blog-api .
+docker build -t luizalabs-test-back .
 
 # Start the services using Docker Compose
 echo "Starting services with Docker Compose..."
@@ -88,14 +82,16 @@ until docker exec ${POSTGRES_CONTAINER_NAME} pg_isready -U "$POSTGRES_USER" > /d
   sleep 2
 done
 
-echo "npm install"
-docker exec ${APP_CONTAINER_NAME} npm install
+echo "Generating docs..."
+docker exec -e NODE_ENV=development ${APP_CONTAINER_NAME} npm run docs
 
-# Database resets
 echo "Resetting database and running migrations"
 docker exec -e NODE_ENV=development ${APP_CONTAINER_NAME} npm run reset:db
 
 echo "Pushing migration files..."
 docker exec ${APP_CONTAINER_NAME} npx drizzle-kit push
+
+echo "Installing dependencies..."
+npm install
 
 echo "Docker setup and services configured successfully"
