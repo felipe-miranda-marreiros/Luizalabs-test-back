@@ -31,7 +31,7 @@ app.use(authenticationRouter)
 app.get('/api/products', async (req, res) => {
   const productKey = 'product_key'
   const data = await redisAdapter.get(productKey)
-  if (data) return data
+  if (data) return res.status(200).json(data)
   const response = await axios.get('https://fakestoreapi.com/products')
   await redisAdapter.set(productKey, response.data)
   res.status(200).json(response.data)
