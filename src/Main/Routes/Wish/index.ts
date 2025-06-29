@@ -8,7 +8,7 @@ import { Router } from 'express'
 export const wishRouter = Router()
 
 wishRouter.post(
-  '/api/wish/:product_id',
+  '/api/wish/product/:product_id',
   expressControllerAdapter(addOrRemoveWishController)
 )
 
@@ -17,6 +17,12 @@ wishRouter.delete(
   expressControllerAdapter(removeWishListController)
 )
 
-wishRouter.get('/api/wish', expressControllerAdapter(wishListController))
+wishRouter.get(
+  '/api/wish/products',
+  expressControllerAdapter(wishListController)
+)
 
-wishRouter.get('/api/wish/list', expressControllerAdapter(currentWishesRoute))
+wishRouter.get(
+  '/api/wish/current',
+  expressControllerAdapter(currentWishesRoute)
+)
